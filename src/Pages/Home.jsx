@@ -13,12 +13,17 @@ const Home = () => {
 
     useEffect(() => {
         const readData = () => {
-            if (localStorage.getItem("itemName")) {
+            if (localStorage.getItem("itemName") !== null) {
                 setData(JSON.parse(localStorage.getItem("itemName")));
+            } 
+            if (localStorage.getItem("itemName") === null) {
+                setData([]);
             }
         };
         readData();
 
+        // console.log(data);
+        
         if (search.length !== 0) {
             let newItems = data.filter((item) => item.toLowerCase().includes(search));
             if (newItems.length !== 0) {
@@ -31,7 +36,11 @@ const Home = () => {
             }
         }
         if (search.length === 0) {
-            setData(JSON.parse(localStorage.getItem("itemName")));
+            if(localStorage.getItem("itemName") !== null) {
+                setData(JSON.parse(localStorage.getItem("itemName")));
+            } else {
+                setData([]);
+            }
             setMsg(false);
         }
     }, [search]);
@@ -68,9 +77,11 @@ const Home = () => {
         setItemID(itemID);
     };
 
+
     return (
         <>
             <SearchComponent msg={msg} setSearch={setSearch} />
+
             <AddItem
                 addItem={addItem}
                 editItemFromForm={editItemFromForm}
@@ -78,11 +89,13 @@ const Home = () => {
                 setItemNameINP={setItemNameINP}
                 update={update}
             />
+            
             <Table
                 data={data}
                 deleteItem={deleteItem}
                 editItemFromBTN={editItemFromBTN}
             />
+
         </>
     )
 }

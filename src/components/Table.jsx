@@ -16,7 +16,8 @@ const Table = ({ data, deleteItem, editItemFromBTN }) => {
                     </thead>
                     <tbody>
                         {
-                            data.length !== 0 ?
+                            data.length !== 0
+                                ?
                                 data.map((data, index) => {
                                     return (
                                         <tr key={index}>
